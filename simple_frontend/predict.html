@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FineSpine App</title>
+    <!-- Add reference to Google fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Google Material Design Styles -->
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <!-- Add javascript package axios for accessing APIs -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- Add Stylesheet -->
+    <style>
+        body {
+            margin: 0;
+            background-color: #efefef;
+        }
+
+        .mdc-top-app-bar {
+            background-color: #1c4385;
+        }
+
+        .content {
+
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 650px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .dropzone {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+            border-width: 2px;
+            border-radius: 2px;
+            border-color: #cccccc;
+            border-style: dashed;
+            background-color: #fafafa;
+            outline: none;
+            transition: border .24s ease-in-out;
+            cursor: pointer;
+            background-image: url("/app/assets/spine-1.png"); 
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .prediction {
+            font-family: Roboto, sans-serif;
+            font-size: 32px;
+            font-weight: 900;
+        }
+
+        .mushroom_type {
+            font-family: Roboto, sans-serif;
+            font-size: 32px;
+            font-weight: 900;
+            color: #de2d26;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="mdc-top-app-bar" style="align-items: center;position: relative;">
+        <div class="mdc-top-app-bar__row" style="max-width: 700px;">
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
+                    aria-label="Open navigation menu">menu</button>
+                <span class="mdc-top-app-bar__title" style="font-weight: 900; font-size: 30px;">🦴 FineSpine app</span>
+            </section>
+        </div>
+    </header>
+    <!-- Header -->
+
+    <!-- Content -->
+    <div class="content">
+        <div class="container">
+            <div class="mdc-card mdc-card--outlined" style="min-height: 400px;">
+                <div class="dropzone">
+                    <!--<div><img id="prediction_img" style="width:100%;"/></div>-->
+                    <div><img id="explain_img" style="width:100%;"/></div>
+                </div>
+                <div style="padding:20px;">
+                    <span class="prediction" id="prediction_probablity"></span>
+                </div>
+                <input type="text" id="patientid" >patient_id</input>
+                <button onclick="input_id_onchange()">Predict</button>
+            </div>
+        </div>
+    </div>
+    <!-- Content -->
+</body>
+<!-- Add Javascript -->
+<script>
+    // API URL
+    axios.defaults.baseURL = 'http://localhost:9000/';
+
+    // file input
+    // var input_file = document.getElementById("input_file");
+    var prediction_probability = document.getElementById("prediction_probablity");
+    // var prediction_img = document.getElementById('prediction_img');
+    var explain_img = document.getElementById('explain_img');
+    var patient_id = document.getElementById("patientid");
+
+    function Base64ToImage(base64img, callback) {
+        var img = new Image();
+        img.onload = function() {
+            callback(img);
+        };
+    img.src = base64img;
+    }
+
+    function input_id_onchange() {
+        // Read the uploaded file and display it
+        // input_file_view.src = URL.createObjectURL(file_to_upload);
+        prediction_probability.innerHTML = "";
+
+        // Post the image to the /predict API
+        var formData = new FormData();
+        formData.append("patient_id", patient_id.value);
+        axios.post('/predict', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(function (response) {
+            var prediction_results = response.data;
+
+            var Base64img_explain = prediction_results['explain'];
+            explain_img.src = {Base64img_explain};
+            // Display the results
+            prediction_probability.innerHTML = "Fracture Probability:" + prediction_results["probability"];
+
+        });
+    }
+
+    // Attach an onchange event
+    // input_file.onchange = input_file_onchange;
+</script>
+
+</html>

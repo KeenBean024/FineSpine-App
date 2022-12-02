@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+numpy = "*"
+python-gdcm = "*"
+pydicom = "*"
+pylibjpeg = "*"
+opencv-python-headless = "*"
+glob2 = "*"
+uvicorn = "*"
+fastapi = "*"
+google-auth = "*"
+google-cloud-storage = "*"
+tensorflow = "*"
+matplotlib = "*"
+jupyter = "*"
+lime = "*"
+tensorflow-addons = "*"
+python-multipart = "*"
+aiofiles = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"

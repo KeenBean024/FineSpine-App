@@ -1,0 +1,22 @@
+all:
+    vars:
+      ansible_user: sa_104904256256772749915
+      ansible_ssh_private_key_file: "../secrets/ssh-key-deployment"
+      gcp_service_account_file: "../secrets/deployment.json"
+      gcp_service_account_email: "deployment2@ai5-c3-group18.iam.gserviceaccount.com"
+      gcp_auth_kind: "serviceaccount"
+      gcp_scopes: "https://www.googleapis.com/auth/compute"
+      gcp_project: "ai5-c3-group18"
+      gcp_region: "us-central1"
+      gcp_zone: "us-central1-a"
+      docker_network_name: "appnetwork"
+      persistent_disk_name: "finespine-app-disk"
+      persistent_disk_size: 50
+      machine_instance_name: "finespine-app"
+      machine_type: "n1-standard-4"
+      machine_disk_size: 30
+
+    children:
+        appserver:
+            hosts:
+                34.132.68.102:
