@@ -1,7 +1,8 @@
 # FineSpine App
 **App Description** - A tool to help doctors and technicians detect cervical spine fractures.
 
-**Project Demo** - [Watch the video](https://drive.google.com/file/d/1LHlq5xmMECCA2f9YG_79I9gCKJal-VPA/view) 
+**Project Demo** - [Watch the video](https://drive.google.com/file/d/1LHlq5xmMECCA2f9YG_79I9gCKJal-VPA/view) </br>
+**Presentation** - [click here](https://github.com/KeenBean024/FineSpine-App/blob/main/Spine_fracture_detection.pdf)
 ## App Screens
 | Home Screen | Prediction |
 | ------------- | ------------- |
